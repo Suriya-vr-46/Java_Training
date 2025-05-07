@@ -2,7 +2,11 @@ package Bank;
 import java.util.*;
 
 public class Main {
+<<<<<<< HEAD
     public static void main(String[] args) {
+=======
+    public static void main(String[] args) throws InterruptedException {
+>>>>>>> 156e75f (Updating Bank)
         Scanner sc = new Scanner(System.in);
         User obj = new User();
         int n = 0;
@@ -25,13 +29,27 @@ public class Main {
                 case 2:
                     try{
                         obj.deposit();
+<<<<<<< HEAD
+=======
+                        Thread t = new Thread(new Transaction());
+                        t.start();
+                        t.join();
+>>>>>>> 156e75f (Updating Bank)
                     } catch (Account_Not_Exists e){
                         System.err.println("Error: " + e.getMessage());
                     }
                     break;
                 case 3:
+<<<<<<< HEAD
                     try {
                         obj.withdraw();
+=======
+                    try {              
+                        obj.withdraw();
+                        Thread t = new Thread(new Transaction());
+                        t.start();
+                        t.join();
+>>>>>>> 156e75f (Updating Bank)
                     } catch (Balance_Error e) {
                         System.err.println("Error: " + e.getMessage());
                     } catch (Account_Not_Exists e) {
