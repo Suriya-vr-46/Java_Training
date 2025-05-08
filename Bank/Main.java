@@ -36,8 +36,6 @@ public class Main {
                 case 3:
                     try {
                         obj.withdraw();
-                    try {              
-                        obj.withdraw();
                         Thread t = new Thread(new Transaction());
                         t.start();
                         t.join();
