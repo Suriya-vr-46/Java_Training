@@ -6,7 +6,7 @@ public class Address {
 	String district;
 	int pincode;
 	String state;
-	
+
 	public Address(String doorNo, String street, String district, int pincode, String state) {
 		this.doorNo = doorNo;
 		this.street = street;
@@ -34,13 +34,12 @@ public class Address {
 	public String getState() {
 		return state;
 	}
-	
+
 	public void getDetials() {
-		System.out.print("\nDoor no : "+doorNo);
-		System.out.print("\nStreet : "+street);
-		System.out.print("\nDistrict : "+district);
-		System.out.print("\nPincode : "+pincode);
-		System.out.print("\nState : "+state);
-		System.out.println();
+		System.out.print("\nDoor no : " + doorNo);
+		System.out.print("\nStreet : " + street);
+		System.out.print("\nDistrict : " + district);
+		System.out.print("\nPincode : " + pincode);
+		System.out.print("\nState : " + state);
 	}
 }

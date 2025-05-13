@@ -1,13 +1,15 @@
 package database;
+
 import model.Employee;
 import model.Admin;
 import java.util.*;
 
 public interface Database {
-	ArrayList<Employee> employees = new ArrayList<>();
-	ArrayList<Employee> managers = new ArrayList<>();
-	ArrayList<Employee> supervisors = new ArrayList<>();
-	ArrayList<Employee> technicians = new ArrayList<>();
-	ArrayList<Employee> interns = new ArrayList<>();
-	static Admin admin = new Admin(1,"admin","admin@123");
+	HashMap<Integer,Employee> employees = new HashMap<>();
+	HashMap<Integer,Employee> managers = new HashMap<>();
+	HashMap<Integer,Employee> supervisors = new HashMap<>();
+	HashMap<Integer,Employee> technicians = new HashMap<>();
+	HashMap<Integer,Employee> interns = new HashMap<>();
+	HashMap<Integer,String> roles = new HashMap<>();
+	static Admin admin = new Admin(1, "admin", "admin@123");
 }

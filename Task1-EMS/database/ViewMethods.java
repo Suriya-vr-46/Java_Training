@@ -1,6 +1,6 @@
 package database;
 
-public interface ViewMethods extends Database{
+public interface ViewMethods extends Database {
 	int showMenu();
 	void userLogin();
 }

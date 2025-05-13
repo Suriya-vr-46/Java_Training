@@ -4,7 +4,7 @@ public class Admin {
 	int id;
 	String name;
 	String password;
-	
+
 	public Admin(int id, String name, String password) {
 		this.id = id;
 		this.name = name;
@@ -22,5 +22,5 @@ public class Admin {
 	public String getPassword() {
 		return password;
 	}
-	
+
 }

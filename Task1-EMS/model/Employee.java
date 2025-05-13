@@ -1,20 +1,20 @@
 package model;
+
+import database.Database;
 import java.util.*;
 
-public class Employee {
-	int id;
+public class Employee implements Database{
 	String name;
 	String gender;
 	Address address;
 	int experience;
 	int salary;
-	String role;
-	List<Employee> leads = new ArrayList<>();;
+	int role;
+	List<Integer> leads = new ArrayList<>();
 	int userId;
-	String password;	
-	
-	public Employee(int id, String name, String gender, Address address, int experience, int salary,int userId, String password) {
-		this.id = id;
+	String password;
+
+	public Employee( String name, String gender, Address address, int experience, int salary, int userId, String password) {
 		this.name = name;
 		this.gender = gender;
 		this.address = address;
@@ -23,69 +23,78 @@ public class Employee {
 		this.userId = userId;
 		this.password = password;
 	}
-	
-	public void setLead(Employee emp) {
-		this.leads.add(emp);
+
+	public void setLead(Integer empid) {
+		this.leads.add(empid);
 	}
-	public void setRole(String role) {
+
+	public void setRole(int role) {
 		this.role = role;
-	}	
-	public int getId() {
-		return id;
 	}
 	public String getName() {
 		return name;
 	}
+
 	public String getGender() {
 		return gender;
 	}
+
 	public Address getAddress() {
 		return address;
 	}
+
 	public int getExperience() {
 		return experience;
 	}
+
 	public int getSalary() {
 		return salary;
 	}
-	public String getRole() {
+
+	public int getRole() {
 		return role;
 	}
-	public List<Employee> getLeads() {
+
+	public List<Integer> getLeads() {
 		return leads;
 	}
+
 	public int getUserId() {
 		return userId;
 	}
+
 	public String getPassword() {
 		return password;
 	}
-	
+
 	public void getDetials() {
-		System.out.println("\nID\t:\t"+id);
-		System.out.println("Name\t: \t"+name);
-		System.out.println("Gender\t: \t"+gender);
-		System.out.println("Address\t:\t");address.getDetials();
-		System.out.println("Experience\t:\t"+experience);
-		System.out.println("Salary\t:\t"+salary);
-		System.out.println("User ID\t:\t"+userId);
-		System.out.println("Password\t:\t"+password);
+		System.out.println("Name\t: \t" + name);
+		System.out.println("Gender\t: \t" + gender);
+		System.out.println("Address\t:\t");
+		address.getDetials();
+		System.out.println("Experience\t:\t" + experience);
+		System.out.println("Salary\t:\t" + salary);
+		System.out.println("Password\t:\t" + password);
 		System.out.print("Role\t:\t");
-		if(role == null) {
+		if (role == 0) {
 			System.out.print("No Role!\n");
-		}else {
-			System.out.print(role+"\n");
+		} else {
+			System.out.print(roles.get(role) + "\n");
 		}
 		System.out.print("Lead\t\t:~\n");
-		if(leads == null) {
+		if (leads == null) {
 			System.out.print("No Leads!\n");
-		}else {
-			for(Employee lead: leads) {
-				System.out.println("Name\t\t : "+lead.getName());
-				System.out.println("Role\t\t : "+lead.getRole());
+		} else {
+			for(Integer employeeId: employees.keySet()) {
+				for (Integer lead : leads) {
+					if(employeeId == lead) {
+						System.out.println("Name\t\t : " + employees.get(employeeId).getName());
+						System.out.print("Role\t\t : ");
+						System.out.println(roles.get(employees.get(employeeId).getRole())); 
+					}
+				}
 			}
 		}
 		System.out.println();
 	}
-	
 }
