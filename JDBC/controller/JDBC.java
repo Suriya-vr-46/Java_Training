@@ -4,11 +4,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.util.Scanner;
 public class JDBC{
 	
 	static Connection conn = null;
 	static Statement statement =null;
+	static Scanner sc = new Scanner(System.in);
+	
+	public int shownMenu() {
+		System.out.println("JDBC Connection!");
+		System.out.println("\n1.Connect to database.\n2.User table details.\n3.Add record.\n4.Update record.\n5.Exit.");
+		return sc.nextInt();
+	}
 	
 	public void jdbcConnection() {
 		try {
@@ -25,6 +32,11 @@ public class JDBC{
 			conn=DBConnection.getConnection();
 			statement=conn.createStatement();
 			System.out.println("\nUser Detials!!");			
+			if (!resultSet.isBeforeFirst()) {
+				System.err.println("No Data!");
+				System.out.println("\n----------------------------------------------------------------------------------------------------------------------------\n");
+				return;
+			}
 			while(resultSet.next()) {
 				int userId = resultSet.getInt("USER_ID");
 				String name = resultSet.getString("NAME");
@@ -32,14 +44,19 @@ public class JDBC{
 				String createdTime = resultSet.getString("CREATE_AT");
 				String updatedTime = resultSet.getString("UPDATED_AT");
 				System.out.println("User ID\t:\t"+userId+"\nName\t:\t"+name+"\nPassword\t:\t"+userPassword+"\nCreated Time\t:\t"+createdTime+"\nUpdated Time\t:\t"+updatedTime);
-				System.out.println("\n----------------------------------------------------------------------------------------------------------------------------\n");
 			}
 		} catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
+		System.out.println("\n----------------------------------------------------------------------------------------------------------------------------\n");
 	}
 	
-	public void setRecord(String name,String password) {
+	public void setRecord() {
+		System.out.println("Enter the name : ");
+		sc.nextLine();
+		String name = sc.nextLine();
+		System.out.println("Enter the password : ");
+		String password = sc.nextLine();
 		String sql = "INSERT INTO INV_USER (NAME, PASSWORD) VALUES (?, ?)";
 		try {
 			conn=DBConnection.getConnection();
@@ -61,8 +78,15 @@ public class JDBC{
 		System.out.println("\n----------------------------------------------------------------------------------------------------------------------------\n");
 	}
 	
-	public void updateRecord(int id, String name,String password) {
-		String sql = "UPDATE INV_USER SET NAME = ?, PASSWORD = ? WHERE USER_ID = ?";
+	public void updateRecord() {
+		System.out.println("Enter the user id : ");
+		int id = sc.nextInt();
+		sc.nextLine();
+		System.out.println("Enter the name : ");
+		String name = sc.nextLine();
+		System.out.println("Enter the password : ");
+		String password = sc.nextLine();
+		String sql = "UPDATE INV_USER SET NAME = ?, PASSWORD = ?, UPDATED_AT = GETDATE() WHERE USER_ID = ?";
 		try {
 			conn=DBConnection.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -74,7 +98,7 @@ public class JDBC{
 	        int rows = pstmt.executeUpdate(); 
 
 	        if (rows > 0) {
-	            System.out.println("Record inserted successfully!");
+	            System.out.println("Record updated successfully!");
 	        } else {
 	            System.err.println("Insert failed. No rows affected.");
 	        }
@@ -82,5 +106,13 @@ public class JDBC{
 			System.err.println(e.getMessage());
 		}
 		System.out.println("\n----------------------------------------------------------------------------------------------------------------------------\n");
+	}
+	public void closeConnnection() {
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		System.out.println("Thank you!");
 	}
 }
