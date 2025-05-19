@@ -42,7 +42,7 @@ public class View implements Database {
 		int userid = 0;
 		String password = null;
 
-		String sql = "SELECT USER_ID, PASSWORD FROM INV_USER;";
+		String sql = "select id, password from USER;";
 
 		try {
 			conn = db.getConnection();
@@ -50,11 +50,11 @@ public class View implements Database {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
-				userid = rs.getInt("USER_ID");
-				password = rs.getString("PASSWORD");
+				userid = rs.getInt("id");
+				password = rs.getString("password");
 			}
 			rs.close();
-				
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -68,11 +68,11 @@ public class View implements Database {
 //		} catch (Exception e) {
 //			System.out.println(e.getMessage());
 //		}
-		
+
 		sc.nextLine();
 		System.out.println("Enter User Id : ");
 		int currentUserId = sc.nextInt();
-		
+
 		sc.nextLine();
 		System.out.println("Enter User Password : ");
 		String currentUserPassword = sc.nextLine();
@@ -164,54 +164,86 @@ public class View implements Database {
 		}
 
 		if (flag) {
-			Part part = new Part(name, number, quantity, description);
-			parts.put(number, part);
-			
-//			String sql = "INSERT INTO INV_PART (name, number, quantity, description) VALUES (?, ?, ?, ?)";
-//			
-//			try {
-//				conn = db.getConnection();
-//				PreparedStatement pstmt = conn.prepareStatement(sql);
-//				
-//				pstmt.setString(1, name);
-//				pstmt.setString(2, number);
-//				pstmt.setInt(3, quantity);
-//				pstmt.setString(4, description);
-//				
-//				int rows = pstmt.executeUpdate();
-//				
-//				if(rows > 0) {
-//					System.out.println("Record Inserted Sucessfully!");
-//				} else {
-//					System.out.println("Failed to Insert record!");
-//				}
-//			} catch (Exception e) {
-//				System.out.println(e.getMessage());
-//			}
+//			#HashMap
+//			Part part = new Part(name, number, quantity, description);
+//			parts.put(number, part);
+
+			String sql_part = "insert into PART (name, number, quantity, description) values (?, ?, ?, ?);";
+
+			try {
+				conn = db.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql_part);
+
+				pstmt.setString(1, name);
+				pstmt.setString(2, number);
+				pstmt.setInt(3, quantity);
+				pstmt.setString(4, description);
+
+				int rows = pstmt.executeUpdate();
+
+				if (rows > 0) {
+					System.out.println("Record Inserted Sucessfully!");
+				} else {
+					System.out.println("Failed to Insert record!");
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 		} else {
-			Part part = new Part(name, number, quantity);
-			parts.put(number, part);
-			
-//			String sql = "INSERT INTO INV_PART (name, number, quantity) VALUES (?, ?, ?)";
-//			
-//			try {
-//				conn = db.getConnection();
-//				PreparedStatement pstmt = conn.prepareStatement(sql);
-//				
-//				pstmt.setString(1, name);
-//				pstmt.setString(2, number);
-//				pstmt.setInt(3, quantity);
-//				
-//				int rows = pstmt.executeUpdate();
-//				
-//				if(rows > 0) {
-//					System.out.println("Record Inserted Sucessfully!");
-//				} else {
-//					System.out.println("Failed to Insert record!");
-//				}
-//			} catch (Exception e) {
-//				System.out.println(e.getMessage());
-//			}
+//			#HashMap
+//			Part part = new Part(name, number, quantity);
+//			parts.put(number, part);
+
+			String sql = "insert into PART (name, number, quantity) values (?, ?, ?);";
+
+			try {
+				conn = db.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+
+				pstmt.setString(1, name);
+				pstmt.setString(2, number);
+				pstmt.setInt(3, quantity);
+
+				int rows = pstmt.executeUpdate();
+
+				if (rows > 0) {
+					System.out.println("Record Inserted Sucessfully!");
+				} else {
+					System.out.println("Failed to Insert record!");
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+		String sql_parts = "insert into PARTS(name, number, available) values (?, ?, ?);";
+
+		boolean quantityFlag = true;
+		for (int i = 1; i <= quantity; i++) {
+			try {
+				conn = db.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql_parts);
+
+				pstmt.setString(1, name);
+				pstmt.setString(2, number);
+				pstmt.setBoolean(3, true);
+
+				int rows = pstmt.executeUpdate();
+
+				if (rows > 0) {
+					quantityFlag = true;
+				} else {
+					quantityFlag = false;
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		
+		if(quantityFlag) {
+			System.out.println("Record Inserted Sucessfully!");			
+		} else {			
+			System.out.println("Failed to Insert record!");
 		}
 	}
 
