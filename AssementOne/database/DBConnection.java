@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class DBConnection {
 	private static Connection connection = null;
-	String url = "jdbc:sqlserver://localhost:1433;databaseName=IN_MANAGEMENT;encrypt=true;trustServerCertificate=true;";
+	String url = "jdbc:sqlserver://localhost:1433;databaseName=INV_MANAGEMENT;encrypt=true;trustServerCertificate=true;";
 	String user = "sa";
 	String password = "P@ssword@321";
 	
